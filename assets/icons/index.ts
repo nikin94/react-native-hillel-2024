@@ -1,0 +1,5 @@
+export { default as HeartSvg } from './heart.svg'
+export { default as HeartFillSvg } from './heart-fill.svg'
+export { default as AddFriendSvg } from './addFriend.svg'
+export { default as SearchSvg } from './search.svg'
+export { default as OptionsSvg } from './options.svg'
