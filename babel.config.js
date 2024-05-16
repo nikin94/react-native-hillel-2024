@@ -6,12 +6,24 @@ module.exports = function (api) {
       [
         'module-resolver',
         {
-          extensions: ['.ios.js', '.android.js', '.ios.jsx', '.android.jsx', '.js', '.jsx', '.json', '.ts', '.tsx'],
+          extensions: [
+            '.ios.js',
+            '.android.js',
+            '.ios.jsx',
+            '.android.jsx',
+            '.js',
+            '.jsx',
+            '.json',
+            '.ts',
+            '.tsx'
+          ],
           root: ['.'],
           alias: {
             '@assets': './assets',
             '@components': './src/components',
-            '@interfaces': './src/interfaces'
+            '@interfaces': './src/interfaces',
+            '@navigation': './src/navigation',
+            '@screens': './src/screens'
           }
         }
       ]
