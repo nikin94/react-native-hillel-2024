@@ -1,19 +1,6 @@
-import { StyleSheet, SafeAreaView, StatusBar } from 'react-native'
+import { AppNavigator } from '@navigation'
+import 'react-native-gesture-handler'
 
-import { CharactersList } from '@components'
-
-const App = () => (
-  <SafeAreaView style={styles.root}>
-    <StatusBar />
-    <CharactersList />
-  </SafeAreaView>
-)
-
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    alignItems: 'center'
-  }
-})
+const App = () => <AppNavigator />
 
 export default App

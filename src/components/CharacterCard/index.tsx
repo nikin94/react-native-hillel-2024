@@ -1,10 +1,13 @@
 import { useState } from 'react'
-import { View, Text, Image, ViewStyle, ActivityIndicator } from 'react-native'
+import { ActivityIndicator, Image, Text, View, ViewStyle } from 'react-native'
 
-import { ICharacter } from '@interfaces'
-import { HeartFillSvg, AddFriendSvg, HeartSvg } from '@assets/icons'
+import { AddFriendSvg, HeartFillSvg, HeartSvg } from '@assets/icons'
 import { Button } from '@components'
+import { ICharacter } from '@interfaces'
 
+import { RootStackParamList } from '@navigation'
+import { useNavigation } from '@react-navigation/native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import styles from './styles'
 
 interface CharacterCardProps {
@@ -23,6 +26,8 @@ const CharacterCard = ({
   style
 }: CharacterCardProps) => {
   const [isFavorite, setIsFavorite] = useState(false)
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
   const HeartIcon = isFavorite ? HeartFillSvg : HeartSvg
 
@@ -41,12 +46,16 @@ const CharacterCard = ({
     isFavorite ? removeFavorite() : setFavorite()
   }
 
+  const onCardPress = () => {
+    navigation.navigate('Character', { character })
+  }
+
   const onAddFriendPress = () => {
     console.log('Add friend pressed')
   }
 
   return (
-    <View style={[styles.container, style]}>
+    <Button onPress={onCardPress} style={[styles.container, style]}>
       <View style={styles.imageContainer}>
         <Image
           style={styles.image}
@@ -79,7 +88,7 @@ const CharacterCard = ({
           <AddFriendSvg style={styles.addFriend} />
         </Button>
       </View>
-    </View>
+    </Button>
   )
 }
 
