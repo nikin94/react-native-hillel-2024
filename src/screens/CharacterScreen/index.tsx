@@ -1,11 +1,15 @@
 import { ICharacter } from '@interfaces'
-import { useRoute } from '@react-navigation/native'
+import { useEffect } from 'react'
 import { Image, SafeAreaView, StatusBar, Text } from 'react-native'
 import styles from './styles'
 
-const Character = () => {
-  const { params } = useRoute()
-  const { photoUrl } = (params as { character: ICharacter }).character
+const CharacterScreen = ({ navigation, route }) => {
+  const { photoUrl, name } = (route.params as { character: ICharacter })
+    .character
+
+  useEffect(() => {
+    navigation.setOptions({ title: name })
+  }, [])
 
   return (
     <SafeAreaView style={styles.container}>
@@ -20,4 +24,4 @@ const Character = () => {
   )
 }
 
-export default Character
+export default CharacterScreen

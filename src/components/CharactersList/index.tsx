@@ -1,33 +1,18 @@
 import { useEffect, useMemo, useState } from 'react'
 import { FlatList, Text, View } from 'react-native'
-import axios from 'axios'
 
-import { ICharacter } from '@interfaces'
 import { CharacterCard, SearchBar } from '@components'
+import { useCharacters } from '@hooks'
 
 import styles from './styles'
 
 const CharactersList = () => {
-  const [characters, setCharacters] = useState<ICharacter[]>([])
   const [inputValue, setInputValue] = useState('')
   const [debouncedInputValue, setDebouncedInputValue] = useState('')
   const [favoriteIds, setFavoriteIds] = useState<string[]>([])
   const [isFavoriteFilterOn, setIsFavoriteFilterOn] = useState(false)
 
-  const getData = async () => {
-    if (!process.env.EXPO_PUBLIC_API_URL) {
-      console.error('API URL is not defined')
-      return
-    }
-
-    const res = await axios.get(process.env.EXPO_PUBLIC_API_URL, {
-      params: {
-        name: debouncedInputValue
-      }
-    })
-
-    setCharacters(res.data)
-  }
+  const { characters } = useCharacters(debouncedInputValue)
 
   const filteredCharacters = useMemo(() => {
     if (!favoriteIds || !isFavoriteFilterOn) {
@@ -36,10 +21,6 @@ const CharactersList = () => {
 
     return characters.filter(character => favoriteIds.includes(character._id))
   }, [characters, favoriteIds, isFavoriteFilterOn])
-
-  useEffect(() => {
-    getData()
-  }, [debouncedInputValue])
 
   const onChangeText = (text: string) => {
     setInputValue(text)

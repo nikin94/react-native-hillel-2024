@@ -4,7 +4,7 @@ import { Pressable, PressableProps, Text } from 'react-native'
 import styles from './styles'
 
 interface ButtonProps extends PressableProps {
-  children: ReactNode | string
+  children?: ReactNode | string
   style?: any
 }
 

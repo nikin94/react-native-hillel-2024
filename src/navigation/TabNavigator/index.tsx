@@ -1,6 +1,6 @@
 import AntDesign from '@expo/vector-icons/AntDesign'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { HomeScreen, Swiper } from '@screens'
+import { MainScreen, SwiperScreen } from '@screens'
 
 const Tab = createBottomTabNavigator()
 
@@ -8,7 +8,7 @@ const TabNavigator = () => (
   <Tab.Navigator screenOptions={{ tabBarShowLabel: false }}>
     <Tab.Screen
       name='Home'
-      component={HomeScreen}
+      component={MainScreen}
       options={{
         tabBarIcon: ({ focused }) => (
           <AntDesign name='home' color={focused ? '#333' : '#888'} size={30} />
@@ -18,7 +18,7 @@ const TabNavigator = () => (
     />
     <Tab.Screen
       name='Swiper'
-      component={Swiper}
+      component={SwiperScreen}
       options={{
         tabBarIcon: ({ focused }) => (
           <AntDesign
