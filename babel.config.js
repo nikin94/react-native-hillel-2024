@@ -23,7 +23,8 @@ module.exports = function (api) {
             '@components': './src/components',
             '@interfaces': './src/interfaces',
             '@navigation': './src/navigation',
-            '@screens': './src/screens'
+            '@screens': './src/screens',
+            '@hooks': './src/hooks'
           }
         }
       ]

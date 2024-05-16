@@ -1,7 +1,7 @@
 import { TabNavigator } from '@navigation'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { Character, ModalScreen } from '@screens'
+import { CharacterScreen, ModalScreen } from '@screens'
 
 const Stack = createNativeStackNavigator()
 
@@ -14,11 +14,7 @@ const AppNavigator = () => (
           component={TabNavigator}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
-          name='Character'
-          component={Character}
-          options={({ route }) => ({ title: route.params?.character.name })}
-        />
+        <Stack.Screen name='Character' component={CharacterScreen} />
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen
