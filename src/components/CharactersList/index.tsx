@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react'
-import { FlatList, Text, View } from 'react-native'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { FlatList, RefreshControl, Text, View } from 'react-native'
 
 import { CharacterCard, SearchBar } from '@components'
 import { useCharacters } from '@hooks'
@@ -11,8 +11,23 @@ const CharactersList = () => {
   const [debouncedInputValue, setDebouncedInputValue] = useState('')
   const [favoriteIds, setFavoriteIds] = useState<string[]>([])
   const [isFavoriteFilterOn, setIsFavoriteFilterOn] = useState(false)
+  const [refreshing, setRefreshing] = useState(false)
+  const [isRandom, setIsRandom] = useState(true)
+  const [itemsNumber, setItemsNumber] = useState(20)
 
-  const { characters } = useCharacters(debouncedInputValue)
+  const { characters, reload } = useCharacters({
+    uri: isRandom ? '/random' : '',
+    params: {
+      name: debouncedInputValue,
+      count: itemsNumber
+    }
+  })
+
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true)
+    await reload()
+    setRefreshing(false)
+  }, [])
 
   const filteredCharacters = useMemo(() => {
     if (!favoriteIds || !isFavoriteFilterOn) {
@@ -52,7 +67,12 @@ const CharactersList = () => {
         contentContainerStyle={styles.cardsListContent}
         showsVerticalScrollIndicator={false}
         data={filteredCharacters}
-        keyExtractor={item => item._id}
+        keyExtractor={(item, index) => item._id + index}
+        onEndReachedThreshold={0.5}
+        onEndReached={() => setItemsNumber(prev => prev + 10)}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
         renderItem={({ item, index }) => (
           <CharacterCard
             character={item}

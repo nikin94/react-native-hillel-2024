@@ -1,6 +1,7 @@
-import { ICharacter } from '@interfaces'
 import { useEffect } from 'react'
 import { Image, SafeAreaView, StatusBar, Text } from 'react-native'
+
+import { ICharacter } from '@lib'
 import styles from './styles'
 
 const CharacterScreen = ({ navigation, route }) => {

@@ -19,8 +19,11 @@ const SwiperScreen = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isTouching, setIsTouching] = useState(false)
   const [isDataLoaded, setIsDataLoaded] = useState(false)
-  const { characters } = useCharacters()
   const dimensions = useWindowDimensions()
+  const { characters } = useCharacters({
+    uri: '/random',
+    params: { count: 20 }
+  })
 
   useEffect(() => {
     if (!isDataLoaded) return
