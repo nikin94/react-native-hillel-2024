@@ -3,8 +3,11 @@ import { FlatList, RefreshControl, Text, View } from 'react-native'
 
 import { CharacterCard, SearchBar } from '@components'
 import { useCharacters } from '@hooks'
+import { ICharacter } from '@lib'
 
 import styles from './styles'
+
+const keyExtractor = (item: ICharacter, index: number) => item._id + index
 
 const CharactersList = () => {
   const [inputValue, setInputValue] = useState('')
@@ -55,6 +58,10 @@ const CharactersList = () => {
     </View>
   )
 
+  const onEndReached = useCallback(() => {
+    setItemsNumber(prev => prev + 10)
+  }, [itemsNumber])
+
   return (
     <View style={styles.container}>
       <SearchBar
@@ -67,9 +74,9 @@ const CharactersList = () => {
         contentContainerStyle={styles.cardsListContent}
         showsVerticalScrollIndicator={false}
         data={filteredCharacters}
-        keyExtractor={(item, index) => item._id + index}
+        keyExtractor={keyExtractor}
         onEndReachedThreshold={0.5}
-        onEndReached={() => setItemsNumber(prev => prev + 10)}
+        onEndReached={onEndReached}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }

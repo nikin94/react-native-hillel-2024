@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import {
   Appearance,
   ColorSchemeName,
@@ -18,7 +18,7 @@ const AppSettings = () => {
 
   const colorScheme = useColorScheme()
 
-  const switchIsPhoneTheme = () => {
+  const switchIsPhoneTheme = useCallback(() => {
     setIsUsePhoneTheme(prev => !prev)
 
     if (isUsePhoneTheme) {
@@ -28,12 +28,12 @@ const AppSettings = () => {
     }
 
     setIsDarkModeSelectorDisabled(true)
-  }
+  }, [isUsePhoneTheme, appTheme, colorScheme])
 
-  const switchAppTheme = () => {
+  const switchAppTheme = useCallback(() => {
     Appearance.setColorScheme(appTheme === 'light' ? 'dark' : 'light')
     setAppTheme(prev => (prev === 'light' ? 'dark' : 'light'))
-  }
+  }, [appTheme, colorScheme])
 
   return (
     <View style={styles.container}>
