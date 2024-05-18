@@ -1,4 +1,4 @@
-import { ICharacter } from '@interfaces'
+import { ICharacter } from '@lib'
 
 export type RootStackParamList = {
   Character: { character: ICharacter }

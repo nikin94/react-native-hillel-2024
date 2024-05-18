@@ -1,12 +1,18 @@
 import { useState } from 'react'
-import { ActivityIndicator, Image, Text, View, ViewStyle } from 'react-native'
+import {
+  ActivityIndicator,
+  Alert,
+  Image,
+  Text,
+  View,
+  ViewStyle
+} from 'react-native'
 
 import { AddFriendSvg, HeartFillSvg, HeartSvg } from '@assets/icons'
 import { Button } from '@components'
-import { ICharacter } from '@interfaces'
-
+import { ICharacter } from '@lib'
 import { RootStackParamList } from '@navigation'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useTheme } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import styles from './styles'
 
@@ -28,7 +34,7 @@ const CharacterCard = ({
   const [isFavorite, setIsFavorite] = useState(false)
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>()
-
+  const { colors } = useTheme()
   const HeartIcon = isFavorite ? HeartFillSvg : HeartSvg
 
   if (!character) {
@@ -51,11 +57,17 @@ const CharacterCard = ({
   }
 
   const onAddFriendPress = () => {
-    console.log('Add friend pressed')
+    Alert.alert('Add to friends list?', name, [
+      { text: 'No', onPress: () => console.log('NO Pressed'), style: 'cancel' },
+      { text: 'Yes', onPress: () => console.log('YES Pressed') }
+    ])
   }
 
   return (
-    <Button onPress={onCardPress} style={[styles.container, style]}>
+    <Button
+      onPress={onCardPress}
+      style={[styles.container, style, { backgroundColor: colors.background }]}
+    >
       <View style={styles.imageContainer}>
         <Image
           style={styles.image}

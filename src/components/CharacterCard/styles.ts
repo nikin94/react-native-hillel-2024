@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
   container: {
     padding: 12,
     borderRadius: 10,
-    backgroundColor: '#f9f9f9',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
@@ -69,7 +68,8 @@ const styles = StyleSheet.create({
   },
   iconsContainer: {
     alignItems: 'flex-end',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    height: '100%'
   }
 })
 

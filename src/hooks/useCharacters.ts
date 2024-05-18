@@ -1,11 +1,17 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 
-import { ICharacter } from '@interfaces'
+import { ICharacter } from '@lib'
 
-export const useCharacters = (name?: string) => {
+interface UseCharactersProps {
+  uri?: string
+  params?: Record<string, any>
+}
+
+export const useCharacters = ({ uri, params }: UseCharactersProps) => {
   const [characters, setCharacters] = useState<ICharacter[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  const [isPushing, setIsPushing] = useState(false)
   const [error, setError] = useState(null)
 
   const fetchCharacters = async () => {
@@ -17,9 +23,17 @@ export const useCharacters = (name?: string) => {
     }
 
     try {
-      const res = await axios.get(process.env.EXPO_PUBLIC_API_URL, {
-        params: { name }
-      })
+      const res = await axios.get(
+        process.env.EXPO_PUBLIC_API_URL + (uri || ''),
+        { params }
+      )
+
+      if (isPushing) {
+        setCharacters(prev => [...prev, ...res.data])
+        setIsPushing(false)
+        setIsLoading(false)
+        return
+      }
 
       setCharacters(res.data)
     } catch (error: any) {
@@ -30,8 +44,17 @@ export const useCharacters = (name?: string) => {
   }
 
   useEffect(() => {
+    if (isLoading) return
     fetchCharacters()
-  }, [name])
+  }, [uri, params?.name])
 
-  return { characters, isLoading, error }
+  useEffect(() => {
+    if (isLoading) return
+    setIsPushing(true)
+    fetchCharacters()
+  }, [params?.count])
+
+  const reload = () => fetchCharacters()
+
+  return { characters, reload, isLoading, error }
 }
