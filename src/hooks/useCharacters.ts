@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 
-import { ICharacter } from '@lib'
+import { useCharacterStore } from '@store'
 
 interface UseCharactersProps {
   uri?: string
@@ -9,7 +9,7 @@ interface UseCharactersProps {
 }
 
 export const useCharacters = ({ uri, params }: UseCharactersProps) => {
-  const [characters, setCharacters] = useState<ICharacter[]>([])
+  const { characters, addCharacters, setCharacters } = useCharacterStore()
   const [isLoading, setIsLoading] = useState(false)
   const [isPushing, setIsPushing] = useState(false)
   const [error, setError] = useState(null)
@@ -29,7 +29,7 @@ export const useCharacters = ({ uri, params }: UseCharactersProps) => {
       )
 
       if (isPushing) {
-        setCharacters(prev => [...prev, ...res.data])
+        addCharacters(res.data)
         setIsPushing(false)
         setIsLoading(false)
         return

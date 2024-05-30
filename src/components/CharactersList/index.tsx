@@ -4,7 +4,6 @@ import { FlatList, RefreshControl, Text, View } from 'react-native'
 import { CharacterCard, SearchBar } from '@components'
 import { useCharacters } from '@hooks'
 import { ICharacter } from '@lib'
-
 import styles from './styles'
 
 const keyExtractor = (item: ICharacter, index: number) => item._id + index
@@ -15,11 +14,10 @@ const CharactersList = () => {
   const [favoriteIds, setFavoriteIds] = useState<string[]>([])
   const [isFavoriteFilterOn, setIsFavoriteFilterOn] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
-  const [isRandom, setIsRandom] = useState(true)
   const [itemsNumber, setItemsNumber] = useState(20)
 
   const { characters, reload } = useCharacters({
-    uri: isRandom ? '/random' : '',
+    uri: '/random',
     params: {
       name: debouncedInputValue,
       count: itemsNumber
