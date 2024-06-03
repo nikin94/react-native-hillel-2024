@@ -9,9 +9,8 @@ interface UseCharactersProps {
 }
 
 export const useCharacters = ({ uri, params }: UseCharactersProps) => {
-  const { characters, addCharacters, setCharacters } = useCharacterStore()
+  const { characters, addCharacters } = useCharacterStore()
   const [isLoading, setIsLoading] = useState(false)
-  const [isPushing, setIsPushing] = useState(false)
   const [error, setError] = useState(null)
 
   const fetchCharacters = async () => {
@@ -28,14 +27,7 @@ export const useCharacters = ({ uri, params }: UseCharactersProps) => {
         { params }
       )
 
-      if (isPushing) {
-        addCharacters(res.data)
-        setIsPushing(false)
-        setIsLoading(false)
-        return
-      }
-
-      setCharacters(res.data)
+      addCharacters(res.data)
     } catch (error: any) {
       setError(error)
     }
@@ -50,7 +42,6 @@ export const useCharacters = ({ uri, params }: UseCharactersProps) => {
 
   useEffect(() => {
     if (isLoading) return
-    setIsPushing(true)
     fetchCharacters()
   }, [params?.count])
 

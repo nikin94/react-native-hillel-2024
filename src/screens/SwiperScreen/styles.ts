@@ -17,7 +17,6 @@ const styles = StyleSheet.create({
     right: 0,
     position: 'absolute',
     flexDirection: 'row',
-    gap: 5,
     padding: 5
   },
   content: {
