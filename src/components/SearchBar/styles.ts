@@ -3,10 +3,10 @@ import { StyleSheet } from 'react-native'
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    height: 40,
     gap: 10,
     width: '100%',
-    marginBottom: 8
+    marginBottom: 8,
+    alignItems: 'center'
   },
   inputContainer: {
     flex: 1

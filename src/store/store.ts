@@ -7,7 +7,11 @@ export const createCharactersStore = () => {
       this.characters = _characters
     },
     addCharacters(_characters: ICharacter[]) {
-      this.characters.push(..._characters)
+      _characters.forEach(
+        c =>
+          this.characters.some(ch => ch._id === c._id) ||
+          this.characters.push(c)
+      )
     }
   }
 }

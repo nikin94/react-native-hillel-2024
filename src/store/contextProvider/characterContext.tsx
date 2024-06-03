@@ -6,8 +6,7 @@ import { createCharactersStore } from '@store'
 
 const CharacterContext = createContext({
   characters: [] as ICharacter[],
-  addCharacters: (_characters: ICharacter[]) => {},
-  setCharacters: (_characters: ICharacter[]) => {}
+  addCharacters: (_characters: ICharacter[]) => {}
 })
 
 export const CharacterProvider = ({ children }: { children: ReactNode }) => {
